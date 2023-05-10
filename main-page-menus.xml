@@ -1,0 +1,34 @@
+<job concurrent_runs="10" ufgConcurrency="10">
+    <!-- Load the reusable runner and browser configurations and any reusable Action Blocks -->
+    <load>definitions.xml</load>
+    <load>configurations.xml</load>
+
+    <!-- Open a new Applitools batch -->
+    <batch name="Mohawk Flooring Web Site">
+        <!-- Add as many tests as desired -->
+        <test appname="Mohawk Flooring" testname="Main Page Menus">
+            <!-- select one of the runner/browser configurations we specified in configurations.xml -->
+            <configurations names="chromeLocal" />
+            <!-- List the desired actions the test should preform -->
+            <execute>
+                <action type="navigate">https://www.mohawkflooring.com/</action>
+                <action type="click" by="css" selector="#hs-eu-decline-button" implicit_wait="10" onError="continue"/>
+		<action type="sleep">1000</action>
+		<!-- lock the carousel banner to the first image for a consistent capture -->
+		<action type="click" by="css" selector="div.swiper-button-next" implicit_wait="10"/>
+		<action type="click" by="css" selector="div.swiper-pagination > span:first-child" implicit_wait="10"/>
+		<!-- chech the main menus -->
+		<action type="iterateElements" tag="li">
+		    <withinContainer by="css" selector="ul.menu-desktop" />
+		    <foreach>
+		        <action type="mouseover"/>
+			<!-- action type="check" target="region" by="css" selector="mflooring-main-expansion-panel-desktop.ng-star-inserted" stepName="Main Menu Item (menu)" matchlevel="strict" useDom="true" onError="continue"/ -->
+			<action type="check" target="window" stepName="Main Menu Items (window)" matchlevel="strict" fullPage="false" useDom="true"/>
+			<!-- action type="goManual"/ -->
+			<!-- TODO - mouseover each element and verify that it gets the expected highlighting -->
+		    </foreach>
+		</action>
+            </execute>
+        </test>
+    </batch>
+</job>

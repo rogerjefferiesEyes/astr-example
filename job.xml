@@ -1,0 +1,18 @@
+<job concurrent_runs="10" ufgConcurrency="10">
+    <!-- Load the reusable runner and browser configurations and any reusable Action Blocks -->
+    <load>definitions.xml</load>
+    <load>configurations.xml</load>
+
+    <!-- Open a new Applitools batch -->
+    <batch name="Mohawk Flooring Web Site">
+        <!-- Add as many tests as desired -->
+        <test appname="Mohawk Flooring" testname="Main Page">
+            <!-- select one of the runner/browser configurations we specified in configurations.xml -->
+            <configurations names="chromeLocal" />
+            <!-- List the desired actions the test should preform -->
+            <execute>
+                <action type="navigate">https://www.mohawkflooring.com/</action>
+            </execute>
+        </test>
+    </batch>
+</job>
